@@ -1,0 +1,22 @@
+name: ci
+
+on: push
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ["0.10.0-dev.4060+61aaef0b0", "0.10.0-dev.4166+cae76d829"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: setup zig master
+        uses: goto-bus-stop/setup-zig@v1
+        with:
+          version: ${{ matrix.version }}
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: run
+        run: zig build run
