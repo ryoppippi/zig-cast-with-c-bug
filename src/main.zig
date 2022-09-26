@@ -4,9 +4,9 @@ const C = @cImport({
 });
 pub fn main() !void {
     const p = C.Point{ .x = 1, .y = 2 };
-    const p_array = [_]C.Point{ p, p, p };
+    comptime var p_array = [_]C.Point{ p, p, p };
 
-    const points = C.Points{
+    comptime var points = C.Points{
         .points = @ptrCast([*c]C.Point, &p_array),
         .length = p_array.len,
     };
